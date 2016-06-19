@@ -1,0 +1,74 @@
+#######################################################
+#
+#  docker-compose-cmangos
+#
+#######################################################
+#
+#  To run this compose file, you must specify 
+#  services to run: 
+#
+#    docker-compose up [-d] <service1> [<service2> ...]
+#
+#  To initialize your setup:
+#
+#    docker-compose up initdb
+#
+#  This will launch MySQL and initialize the database
+#
+#  To start mangos and realmd:
+#
+#    docker-compose up -d mangosd realmd
+#
+#######################################################
+
+version: '2.0'
+services:
+  test:
+    build: cmangos
+    environment:
+      - MYSQL_ROOT_PASSWORD=mangos
+    links:
+      - mysql
+    command: "sleep 100000000"
+    volumes:
+      - ./etc:/mangos/run/etc
+  mangosd:
+    build: cmangos
+    environment:
+      - MYSQL_ROOT_PASSWORD=mangos
+    links:
+      - mysql
+      - realmd
+    command: "mangosd.sh"
+    volumes:
+      - ./etc:/mangos/run/etc
+    ports:
+      - 8085:8085
+  realmd:
+    build: cmangos
+    environment:
+      - MYSQL_ROOT_PASSWORD=mangos
+    links:
+      - mysql
+    command: "realmd.sh"
+    volumes:
+      - ./etc:/mangos/run/etc
+    ports:
+      - 3724:3724
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mangos
+    command:
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+  initdb:
+    build: cmangos
+    environment:
+      - MYSQL_ROOT_PASSWORD=mangos
+    links:
+      - mysql
+    command: "initdb.sh"
+    
+
+  foobar:
+    image: SPECIFY_SERVICES_TO_RUN
