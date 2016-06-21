@@ -44,6 +44,7 @@ services:
       - ./etc:/mangos/run/etc
     ports:
       - 8085:8085
+    restart: unless-stopped
   realmd:
     build: cmangos
     environment:
@@ -55,12 +56,14 @@ services:
       - ./etc:/mangos/run/etc
     ports:
       - 3724:3724
+    restart: unless-stopped
   mysql:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=mangos
     command:
       - --sql-mode=NO_ENGINE_SUBSTITUTION
+    restart: unless-stopped
   initdb:
     build: cmangos
     environment:

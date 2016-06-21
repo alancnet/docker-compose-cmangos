@@ -9,10 +9,6 @@ RUN apt-get update && \
     apt-get remove -y cmake cmake-data && \
     apt-get install -y curl wget build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev \
                        mysql-client libtool libssl-dev grep binutils zlibc libc6 libbz2-dev subversion cmake && \
-    echo "Installing Cmake..." && \
-    wget --quiet --output-file /tmp/cmake.sh http://www.cmake.org/files/v3.0/cmake-3.0.2-Linux-i386.sh && \
-    cd /opt && (echo y && echo y) | bash /tmp/cmake.sh && ln -f -s /opt/cmake*/bin/cmake /usr/local/bin/cmake && \
-    cd / && \
     echo "Installing Boost..." && \
     wget --quiet https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.gz && \
     tar -xzf /boost_1_61_0.tar.gz && \
