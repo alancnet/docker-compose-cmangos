@@ -1,4 +1,4 @@
 #!/bin/bash
 wait-for-mysql.sh
-cd /mangos/run/bin
+cd /runtime/bin
 ./realmd
