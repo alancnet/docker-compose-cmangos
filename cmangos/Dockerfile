@@ -4,9 +4,9 @@ ENV MYSQL_ROOT_PASSWORD="mangos" \
     MYSQL_HOST="mysql" \
     MYSQL_PORT="3306" \
     BOOST_ROOT="/boost_1_61_0" \
-    GITHUB_CMANGOS="git://github.com/cmangos/mangos-classic.git" \
-    GITHUB_ACID="git://github.com/ACID-Scripts/Classic.git" \
-    GITHUB_DATABASE="git://github.com/classicdb/database.git" \
+    GITHUB_CMANGOS="git://github.com/cmangos/mangos-tbc.git" \
+    GITHUB_ACID="git://github.com/ACID-Scripts/TBC.git" \
+    GITHUB_DATABASE="git://github.com/TBC-DB/Database.git" \
     GITHUB_MAPS="git://github.com/bilbob77/maps-classic.git" \
     GITHUB_MMAPS="git://github.com/bilbob77/mmaps-classic.git"
 
