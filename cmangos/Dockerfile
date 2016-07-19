@@ -4,7 +4,8 @@ ENV MYSQL_ROOT_PASSWORD="mangos" \
     MYSQL_HOST="mysql" \
     MYSQL_PORT="3306" \
     BOOST_ROOT="/boost_1_61_0" \
-    GITHUB_CMANGOS="git://github.com/cmangos/mangos-classic.git" \
+    GITHUB_CMANGOS="git://github.com/alancnet/mangos.git" \
+    GITHUB_CMANGOS_BRANCH="classic" \
     GITHUB_ACID="git://github.com/ACID-Scripts/Classic.git" \
     GITHUB_DATABASE="git://github.com/classicdb/database.git" \
     GITHUB_MAPS="git://github.com/bilbob77/maps-classic.git" \
@@ -27,7 +28,7 @@ RUN apt-get update && \
     (./b2 || true) && \
     cd / && \
     echo "Cloning Mangos Repos" && \
-    git clone $GITHUB_CMANGOS mangos && \
+    git clone -b $GITHUB_CMANGOS_BRANCH --single-branch $GITHUB_CMANGOS mangos && \
     echo "Building Mangos" && \
     mkdir -p /build && \
     cd /build && \
