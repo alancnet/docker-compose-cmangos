@@ -4,11 +4,15 @@ ENV MYSQL_ROOT_PASSWORD="mangos" \
     MYSQL_HOST="mysql" \
     MYSQL_PORT="3306" \
     BOOST_ROOT="/boost_1_61_0" \
-    GITHUB_CMANGOS="git://github.com/cmangos/mangos-tbc.git" \
+    GITHUB_CMANGOS="git://github.com/alancnet/mangos.git" \
+    GITHUB_CMANGOS_BRANCH="tbc" \
     GITHUB_ACID="git://github.com/ACID-Scripts/TBC.git" \
     GITHUB_DATABASE="git://github.com/TBC-DB/Database.git" \
-    GITHUB_MAPS="git://github.com/bilbob77/maps-classic.git" \
-    GITHUB_MMAPS="git://github.com/bilbob77/mmaps-classic.git"
+    GITHUB_MAPS="git://github.com/bilbob77/maps-tbc.git" \
+    GITHUB_MMAPS_1="git://github.com/bilbob77/mmaps-1-tbc.git" \
+    GITHUB_MMAPS_2="git://github.com/bilbob77/mmaps-2-tbc.git" \
+    GITHUB_VMAPS="git://github.com/bilbob77/vmaps-tbc.git" \
+    GITHUB_DBC="git://github.com/bilbob77/dbc-tbc.git"
 
 
 RUN apt-get update && \
@@ -27,19 +31,29 @@ RUN apt-get update && \
     (./b2 || true) && \
     cd / && \
     echo "Cloning Mangos Repos" && \
-    git clone $GITHUB_CMANGOS mangos && \
+    git clone -b $GITHUB_CMANGOS_BRANCH --single-branch $GITHUB_CMANGOS mangos && \
     echo "Building Mangos" && \
     mkdir -p /build && \
     cd /build && \
     cmake ../mangos -DCMAKE_INSTALL_PREFIX=\../runtime -DPCH=0 -DDEBUG=0 && \
     make && \
     make install && \
-    echo "Cloning WoW Classic maps" && \
-    git clone $GITHUB_MAPS maps-classic && \
-    mv maps-classic/* /runtime/bin/ && \
-    echo "Cloning WoW Classic move maps" && \
-    git clone $GITHUB_MMAPS mmaps-classic && \
-    mv mmaps-classic/* /runtime/bin/ && \
+    echo "Cloning WoW TBC maps" && \
+    git clone $GITHUB_MAPS maps-tbc && \
+    mv maps-tbc /runtime/bin/maps && \
+    echo "Cloning WoW TBC move maps 1" && \
+    git clone $GITHUB_MMAPS_1 mmaps-1-tbc && \
+    echo "Cloning WoW TBC move maps 2" && \
+    git clone $GITHUB_MMAPS_2 mmaps-2-tbc && \
+    mkdir -p /runtime/bin/mmaps && \
+    mv mmaps-1-tbc/* /runtime/bin/mmaps/ && \
+    mv mmaps-2-tbc/* /runtime/bin/mmaps/ && \
+    echo "Cloning WoW TBC Vmaps" && \
+    git clone $GITHUB_VMAPS vmaps-tbc && \
+    mv vmaps-tbc /runtime/bin/vmaps && \
+    echo "Cloning WoW TBC dbc" && \
+    git clone $GITHUB_DBC dbc-tbc && \
+    mv dbc-tbc /runtime/bin/dbc && \
     apt-get remove -y build-essential gcc g++ automake autoconf make binutils cmake autoconf automake binutils \
         build-essential cmake dpkg-dev g++ g++-4.8 gcc  gcc-4.8 libtool make cmake-data && \
     apt-get clean && \
